@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Codies</title>
+	<style>
+		body{
+			background:url(back-images/backg.png);
+		}
+		#qu{
+			margin-left: 15%;
+			margin-right: 15%;
+			height: auto;
+			margin-bottom: 50px;
+			padding: 30px;
+		}
+		textarea{
+			height: 400px;
+			width: 100%;
+			font-size: 20px;
+			margin-bottom: 50px;
+		}
+		button{
+
+			font-size: 20px;
+			margin-bottom: 50px;
+		}
+		.button {
+			font-family:'Open Sans',Lato,sans-serif;
+			font-weight: bold;
+		    background-color: #5d86bb;
+		    border: none;
+		    color: black;
+		    padding: 10px 40px;
+		    padding-bottom: 10px;
+		    text-align: center;
+		    text-decoration: none;
+		    display: inline-block;
+		    font-size: 16px;
+		    margin: 8px 8px;
+		    cursor: pointer;
+		}
+
+		@media only screen and (min-width: 150px) and (max-width: 786px){
+			#qu{
+				margin-left: 0px;
+				margin-right: 0px;
+			}
+		}
+
+
+	</style>
+</head>
+<body>
+<div id="qu" style="background-color: #00b3b3">
+	<section id="sec" style="font-size: 30px;font-weight: bold;margin-bottom: 40px;">
+	</section>
+	<textarea>
+	/*code Here*/
+	</textarea>
+	<button class="button" onclick="alert('Your code is submitted'); location.href='gets.html'">Submit</button>
+</div>
+</body>
+    <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+<script>
+      var config = {
+        apiKey: "AIzaSyDZDf_yVFPrTH9mkoDhDouFIhbJHGl2ebU",
+        authDomain: "webdesign-78e5e.firebaseapp.com",
+        databaseURL: "https://webdesign-78e5e.firebaseio.com",
+        projectId: "webdesign-78e5e",
+        storageBucket: "webdesign-78e5e.appspot.com",
+        messagingSenderId: "406111316943"
+      };
+      firebase.initializeApp(config);
+
+      var hel=document.getElementById("sec");
+
+      firebase.auth().onAuthStateChanged(function(user) {
+	  if (user) {
+	  	var desire = location.search.split("&")[0].replace("?","").split("=")[1];
+	    var topUserPostsRef = firebase.database().ref();
+		topUserPostsRef.on("child_added",snap =>{
+			if(snap.child('qid').val()==desire)
+			hel.innerHTML=snap.child('question').val();
+		});
+	  }
+	});
+</script>
+</html>

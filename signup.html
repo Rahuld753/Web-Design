@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<head>
+
+<style>
+body{
+	background:url(back-images/luca-bravo-217276.jpg) no-repeat;
+  background-size: cover;
+}
+
+
+#content{
+background-color:#2d3237;
+padding:20px 10px 20px 10px;
+margin: 0;
+opacity:0.9;
+display:inline-block;
+overflow:auto;
+width:100%;
+transform: translateX(-12px);
+}
+
+#u_name{
+    padding: 15px;
+	background-color: #5d86bb;
+	opacity:0.9;
+  margin-top: 40%;
+}
+
+#log
+{
+text-align:top;
+float: right;
+}
+
+.button {
+	font-family:'Open Sans',Lato,sans-serif;
+	font-weight: bold;
+    background-color: #5d86bb;
+    border: none;
+    color: black;
+    padding: 10px 40px;
+    padding-bottom: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 8px 8px;
+    cursor: pointer;
+}
+
+
+</style>
+
+</head>
+
+
+
+<body>
+
+
+<div id="content"> 
+                  
+        			<img style="width:150px; height:50px;float:left;" src="mylogo.png" >
+				
+		<div id="log" style="float:right">
+		<input id="em" type="email" name="user_n" placeholder="Email ID" style="height:20px;">
+		<input id="ps" type="password" name="user_p" placeholder="Password" style="height:20px;">
+		 <input id="login" class="button" type="submit" value="Log in" style="height:30px;transform:translateY(5px);opacity:0.9">
+		</div>		
+      </div>
+			
+
+
+
+<center>
+<table width="450"> <td>
+<div id="u_name" >
+<div id="head">
+<center><h1>Sign up</h1></center>
+</div>
+<center>
+<div >
+  <input id="fname" type="text" name="first_name" placeholder="First Name" style="height:20px;">
+  <input type="text" name="last_name" placeholder="Last  Name" style="height:20px"></br></br></br>
+  <input id="email" type="email"  name="email" placeholder="Email Address" size="45" style="height:20px"></br></br></br>
+   Birth date:<input type="date" name="b_date"  placeholder="Birth Date" size="45" style="height:20px"><br>
+  <input type="radio" name="gender" value="male" checked> Male
+  <input type="radio" name="gender" value="male" > Female</br></br></br> 
+ <input id="psw" type="password" name="psw"  placeholder="New Password" size="45" style="height:20px"></br></br></br>
+ <input id="cpsw" type="password" name="psw"  placeholder="confirmed password" size="45" style="height:20px"></br></br>
+  <button id="submitbtn" class="button" style="height:30px;background-color:#1e3048;color:white">Create Account</button>
+ </div>
+
+ </td> </table>
+
+</center>	
+</center>
+</div>
+
+    <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+<script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyDZDf_yVFPrTH9mkoDhDouFIhbJHGl2ebU",
+        authDomain: "webdesign-78e5e.firebaseapp.com",
+        databaseURL: "https://webdesign-78e5e.firebaseio.com",
+        projectId: "webdesign-78e5e",
+        storageBucket: "webdesign-78e5e.appspot.com",
+        messagingSenderId: "406111316943"
+      };
+      firebase.initializeApp(config);
+
+  var btn=document.getElementById("submitbtn");
+  btn.addEventListener("click",
+    function(){
+      var email=document.getElementById("email").value;
+      var pass=document.getElementById("psw").value;
+      var cpass=document.getElementById("cpsw").value;
+      console.log(email);
+      if(pass!=cpass)
+      {
+        alert("Passwords do not match");
+        return;
+      }
+
+      firebase.auth().createUserWithEmailAndPassword(email, pass).then(function(user) {
+         user.updateProfile({displayName: document.getElementById("fname").value});
+         alert("Congrats, You are registered!!!");
+      }).catch(function(error) {
+        console.log(error);
+      });
+    }
+  );
+
+
+  var bt=document.getElementById("login");
+  bt.addEventListener("click",
+    function(){
+      var email=document.getElementById("em").value;
+      var password=document.getElementById("ps").value;
+      console.log(email);
+      firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        alert(errorMessage);
+      });
+    }
+  );
+
+  firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+      alert("Sucessfully Logged In");
+      location.href="signout.html";
+  }
+});
+
+
+</script>
+
+</body>
+</html>
